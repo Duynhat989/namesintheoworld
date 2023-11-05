@@ -1,0 +1,10 @@
+@import './base.css';
+
+.item {
+  position: absolute;
+  background-color: rgb(74, 165, 192);
+  padding: 5px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
