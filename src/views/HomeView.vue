@@ -1,9 +1,13 @@
 <script setup>
-import { ref } from 'vue';
-const inputChange = ref();
-function addItem() {
+import { ref,onMounted } from 'vue';
+const inputChange = ref("");
+const domainCurrent = "https://vinhcity.net/api.php?"
+function addItem(input) {
+  // if(inputChange.value.length < 2){
+  //   alert("Input Empty")
+  //   return
+  // }
   const table = document.querySelector('.table');
-  const input = inputChange.value
   const newItem = document.createElement('div');
   newItem.classList.add('item');
   newItem.textContent = `${table.childElementCount + 1}. ${input}`;
@@ -20,17 +24,39 @@ function addItem() {
   table.appendChild(newItem);
   inputChange.value = ''
 }
+const reload = async () =>{
+    var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  var response = await fetch(`${domainCurrent}get=&token=e9c65d7b30f7d0debd96c5fa95ab95e3`, requestOptions);
+  var res = await response.json()
+  res.forEach(element => {
+    addItem(element.username)
+  });
+}
+const addItemDatabase = async () =>{
+    var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  var response = await fetch(`${domainCurrent}username=`+inputChange.value+`&token=e9c65d7b30f7d0debd96c5fa95ab95e3`, requestOptions);
+  var res = await response.json()
+  addItem(inputChange.value)
+}
+onMounted(()=>{
+  reload()
+})
 </script>
 
 <template>
   <div class="container-fluid">
       <div class="row">
         <div class="table">
-          <div class="item">Item 1</div>
+          
         </div>
         <div class="bottom">
-          <input type="text" class="form-control input" placeholder="Enter YourName" @keyup.enter="addItem" v-model="inputChange">
-          <button class="btn btn-outline-primary" @click="addItem">Thêm Mục</button>
+          <input type="text" class="form-control input" placeholder="Enter YourName" @keyup.enter="addItemDatabase" v-model="inputChange">
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.jpg" width="75" height="75" />
-    <h2>Typing the World</h2>
+    <h2>Names in the world</h2>
   </header>
   <RouterView />
 </template>
