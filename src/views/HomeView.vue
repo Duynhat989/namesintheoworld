@@ -2,6 +2,7 @@
 import { ref,onMounted } from 'vue';
 const inputChange = ref("");
 const domainCurrent = "https://vinhcity.net/api.php?"
+const keyword = ref("")
 function addItem(input) {
   // if(inputChange.value.length < 2){
   //   alert("Input Empty")
@@ -29,7 +30,7 @@ const reload = async () =>{
     method: 'GET',
     redirect: 'follow'
   };
-  var response = await fetch(`${domainCurrent}get=&token=e9c65d7b30f7d0debd96c5fa95ab95e3`, requestOptions);
+  var response = await fetch(`${domainCurrent}get=&token=${keyword.value}`, requestOptions);
   var res = await response.json()
   res.forEach(element => {
     addItem(element.username)
@@ -40,12 +41,13 @@ const addItemDatabase = async () =>{
     method: 'GET',
     redirect: 'follow'
   };
-  var response = await fetch(`${domainCurrent}username=`+inputChange.value+`&token=e9c65d7b30f7d0debd96c5fa95ab95e3`, requestOptions);
+  var response = await fetch(`${domainCurrent}username=`+inputChange.value+`&token=${keyword.value}`, requestOptions);
   var res = await response.json()
   addItem(inputChange.value)
 }
 onMounted(()=>{
   reload()
+  keyword.value = localStorage.getItem('key')
 })
 </script>
 
